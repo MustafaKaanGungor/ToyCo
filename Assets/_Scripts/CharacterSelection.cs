@@ -149,7 +149,6 @@ public class CharacterSelection : MonoBehaviour
         if (confirmButton != null)
             confirmButton.transform.DOScale(0f, 0.3f).SetEase(Ease.InBack);
 
-        DOVirtual.DelayedCall(0.35f, () => gameObject.SetActive(false));
     }
 
     private static void Shuffle<T>(List<T> list)
