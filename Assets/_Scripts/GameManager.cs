@@ -25,6 +25,7 @@ public class GameManager : MonoBehaviour
     {
         GameEvents.InteractWithTribe += (Boy boy) => SetGameState(GameState.Selection);
         GameEvents.OnCharacterConfirmed += (CharacterSO character) => SetGameState(GameState.Map);
+        GameEvents.OnSelectionCancelled += () => SetGameState(GameState.Map);
 
         SetGameState(GameState.Selection);
     }

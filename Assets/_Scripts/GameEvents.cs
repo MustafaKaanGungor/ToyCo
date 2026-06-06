@@ -14,4 +14,7 @@ public static class GameEvents
     public static  Action<Boy> InteractWithTribe;
 
     public static Action<GameState> StateChanged;
+
+    public static event Action OnSelectionCancelled;
+    public static void TriggerSelectionCancelled() => OnSelectionCancelled?.Invoke();
 }
