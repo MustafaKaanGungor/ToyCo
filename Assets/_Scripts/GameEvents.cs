@@ -17,4 +17,8 @@ public static class GameEvents
 
     public static event Action OnSelectionCancelled;
     public static void TriggerSelectionCancelled() => OnSelectionCancelled?.Invoke();
+    public static Action<Boy> SpawnSheep;
+
+    public static Action<Boy> SpawnWeddingPlace;
 }
+                       

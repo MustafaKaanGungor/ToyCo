@@ -32,6 +32,7 @@ public abstract class MapUnit : MonoBehaviour , IMapInteractable
 
     protected bool _isWaiting = false;
     protected float _waitTimer = 0f;
+    private bool _isMovementEnabled = true;
 
     private CircleCollider2D _collider;
     private ContactFilter2D _blockingFilter;
@@ -76,8 +77,23 @@ public abstract class MapUnit : MonoBehaviour , IMapInteractable
         SelectNextTarget();
     }
 
+    public void StopMove()
+    {
+        _isMovementEnabled = false;
+    }
+
+    public void StartMove()
+    {
+        _isMovementEnabled = true;
+    }
+
     protected virtual void Update()
     {
+        if (!_isMovementEnabled)
+        {
+            return;
+        }
+
         if (_isWaiting)
         {
             HandleWaiting();

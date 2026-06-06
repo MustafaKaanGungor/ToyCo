@@ -12,16 +12,16 @@ public class Tribe : MapUnit
     private void OnEnable()
     {
         GameEvents.InteractWithTribe += OnInteractWithTribe;
-        //GameEvents.OnCharacterConfirmed += OnSpawnSheep;
-        //GameEvents.OnCharacterConfirmed += OnSpawnWeddingPlace;
+        GameEvents.SpawnSheep += OnSpawnSheep;
+        GameEvents.SpawnWeddingPlace += OnSpawnWeddingPlace;
     }
 
 
     private void OnDisable()
     {
         GameEvents.InteractWithTribe -= OnInteractWithTribe;
-        //GameEvents.CharachterConfirmed -= OnSpawnSheep;
-        //GameEvents.CharachterConfirmed -= OnSpawnWeddingPlace;
+        GameEvents.SpawnSheep -= OnSpawnSheep;
+        GameEvents.SpawnWeddingPlace -= OnSpawnWeddingPlace;
     }
 
     private void OnInteractWithTribe(Boy boy)
@@ -35,7 +35,7 @@ public class Tribe : MapUnit
             //Secim menusunu ac
             Debug.Log($"Interacted with tribe of type {TribeType}");
             
-           // _isInteracted = true;
+            _isInteracted = true;
         }
     }
 
@@ -54,12 +54,19 @@ public class Tribe : MapUnit
     {
         //HandleTribeWithdrawal(initiator);
     }
-    private void OnSpawnSheep(CharacterSO sO)
+    private void OnSpawnSheep(Boy boy)
     {
-
+        if(TribeType == boy)
+        {
+         GameObject sheep = Instantiate(_sheepPrefab, transform.position, Quaternion.identity);
+        }
     }
-    private void OnSpawnWeddingPlace(CharacterSO sO)
+    private void OnSpawnWeddingPlace(Boy boy)
     {
+        if (TribeType != boy)
+        {
+            return;
+        }
         Vector2 spawnPos;
         int attempts = 0;
         do

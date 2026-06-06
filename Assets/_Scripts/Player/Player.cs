@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public class Player : MonoBehaviour , IMapInteractable
+public class Player : MonoBehaviour, IMapInteractable
 {
     private Rigidbody2D _rb;
     private Collider2D _collider;
@@ -18,11 +18,12 @@ public class Player : MonoBehaviour , IMapInteractable
 
     private void OnGameStateChanged(GameState state)
     {
-        if(state == GameState.Map)
+        if (state == GameState.Map)
         {
             _collider.enabled = true;
             _rb.simulated = true;
-        } else
+        }
+        else
         {
             _collider.enabled = false;
             _rb.simulated = false;
@@ -39,6 +40,8 @@ public class Player : MonoBehaviour , IMapInteractable
         if (initiator is Tribe tribe)
         {
             GameEvents.InteractWithTribe?.Invoke(tribe.TribeType);
+            GameEvents.SpawnSheep?.Invoke();
+            GameEvents.SpawnWeddingPlace?.Invoke();
         }
     }
     public void OnWithdraw(MapUnit initiator)
