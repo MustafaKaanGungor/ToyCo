@@ -5,6 +5,7 @@ public class CharacterSO : ScriptableObject
 {
     public string characterName;
     public Sprite characterSprite;
+    public Gender gender;
     public Boy boy; 
     public HairStyle hairStyle;
     public EyeStyle eyeStyle;
@@ -71,6 +72,12 @@ public enum Boy
     Boy1,
     Boy2,
     Boy3
+}
+
+public enum Gender
+{
+    Male,
+    Female
 }
 
 public enum HairStyle

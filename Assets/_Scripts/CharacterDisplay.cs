@@ -50,6 +50,13 @@ public class CharacterDisplay : MonoBehaviour
             .SetEase(Ease.InOutSine);
     }
 
+    public void FadeOut()
+    {
+        _bobTween?.Kill();
+        transform.DOScale(0f, 0.3f).SetEase(Ease.InBack);
+        _spriteRenderer.DOFade(0f, 0.3f);
+    }
+
     private void OnMouseDown()
     {
         _selection.OnCharacterClicked(this);

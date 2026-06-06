@@ -1,46 +1,85 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
 
 public class CharacterSelection : MonoBehaviour
 {
+    public CharacterSO searchedCharacter;
     public List<CharacterSO> characterList;
     public GameObject characterPrefab;
     public List<Transform> characterPositions;
     public Button confirmButton;
 
+    private enum SelectionPhase { SingleSelect, MatchSelect }
+    private SelectionPhase _currentPhase;
+
     private List<CharacterDisplay> _characterDisplays = new();
+    private List<GameObject> _instantiatedObjects = new();
     private int _selectedIndex = -1;
 
-    private void Awake()
+    private void OnEnable()
     {
+        ClearDisplays();
+
         if (confirmButton != null)
             confirmButton.gameObject.SetActive(false);
+
+        if (searchedCharacter == null)
+            InitializeSingleSelection();
+        else
+            InitializeMatchSelection();
     }
 
-    private void Start()
+    private void OnDisable()
     {
-        InitializeCharacterSelection();
+        ClearDisplays();
     }
 
-    public void InitializeCharacterSelection()
+    private void ClearDisplays()
     {
-        List<CharacterSO> characterSOs = new List<CharacterSO>(characterList);
+        foreach (var obj in _instantiatedObjects)
+            Destroy(obj);
+        _instantiatedObjects.Clear();
+        _characterDisplays.Clear();
+        _selectedIndex = -1;
+    }
 
-        foreach (var position in characterPositions)
+    private void InitializeSingleSelection()
+    {
+        _currentPhase = SelectionPhase.SingleSelect;
+        CharacterSO chosen = characterList[Random.Range(0, characterList.Count)];
+        SpawnCharacter(chosen, characterPositions[0]);
+    }
+
+    private void InitializeMatchSelection()
+    {
+        _currentPhase = SelectionPhase.MatchSelect;
+
+        List<CharacterSO> pool = new List<CharacterSO>(characterList);
+        pool.Remove(searchedCharacter);
+
+        List<CharacterSO> picked = new List<CharacterSO> { searchedCharacter };
+        for (int i = 0; i < 2 && pool.Count > 0; i++)
         {
-            if (characterSOs.Count == 0)
-                break;
-
-            int randomIndex = Random.Range(0, characterSOs.Count);
-            CharacterSO selectedCharacter = characterSOs[randomIndex];
-            characterSOs.RemoveAt(randomIndex);
-
-            var character = Instantiate(characterPrefab, position.position, Quaternion.identity, this.transform);
-            var display = character.GetComponent<CharacterDisplay>();
-            display.Initialize(selectedCharacter, this);
-            _characterDisplays.Add(display);
+            int idx = Random.Range(0, pool.Count);
+            picked.Add(pool[idx]);
+            pool.RemoveAt(idx);
         }
+
+        Shuffle(picked);
+
+        for (int i = 0; i < picked.Count; i++)
+            SpawnCharacter(picked[i], characterPositions[i]);
+    }
+
+    private void SpawnCharacter(CharacterSO data, Transform position)
+    {
+        var character = Instantiate(characterPrefab, position.position, Quaternion.identity, transform);
+        var display = character.GetComponent<CharacterDisplay>();
+        display.Initialize(data, this);
+        _characterDisplays.Add(display);
+        _instantiatedObjects.Add(character);
     }
 
     public void OnCharacterClicked(CharacterDisplay display)
@@ -61,12 +100,40 @@ public class CharacterSelection : MonoBehaviour
         GameEvents.TriggerSelectionChanged(_characterDisplays[_selectedIndex].CharacterData);
     }
 
-    public void ConfirmSelection()
+    public bool ConfirmSelection()
     {
         if (_selectedIndex < 0)
-            return;
+            return false;
 
+        if (_currentPhase == SelectionPhase.MatchSelect
+            && _characterDisplays[_selectedIndex].CharacterData != searchedCharacter)
+            return false;
+
+        if (_currentPhase == SelectionPhase.SingleSelect)
+            searchedCharacter = _characterDisplays[_selectedIndex].CharacterData;
+
+        FadeOutAndDeactivate();
         GameEvents.TriggerCharacterConfirmed(_characterDisplays[_selectedIndex].CharacterData);
-        gameObject.SetActive(false);
+        return true;
+    }
+
+    private void FadeOutAndDeactivate()
+    {
+        foreach (var display in _characterDisplays)
+            display.FadeOut();
+
+        if (confirmButton != null)
+            confirmButton.transform.DOScale(0f, 0.3f).SetEase(Ease.InBack);
+
+        DOVirtual.DelayedCall(0.35f, () => gameObject.SetActive(false));
+    }
+
+    private static void Shuffle<T>(List<T> list)
+    {
+        for (int i = list.Count - 1; i > 0; i--)
+        {
+            int j = Random.Range(0, i + 1);
+            (list[i], list[j]) = (list[j], list[i]);
+        }
     }
 }
