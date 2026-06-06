@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 47d3a5c2c44aaa944af228603180d932, type: 3}
-  m_Name: Char1
+  m_Name: Char2
   m_EditorClassIdentifier: 
-  characterName: "Abd\xFClhamid"
-  characterSprite: {fileID: -5177388603050735206, guid: 71ebafeef3c03457483266a33ab2b270, type: 3}
+  characterName: kevser
+  characterSprite: {fileID: -2413806693520163455, guid: 4adeaf2d2b1c7417e89f026626d8264f, type: 3}
   boy: 0
   hairStyle: 0
   eyeStyle: 0
