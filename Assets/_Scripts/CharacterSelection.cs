@@ -11,6 +11,7 @@ public class CharacterSelection : MonoBehaviour
     public GameObject characterPrefab;
     public List<Transform> characterPositions;
     public Button confirmButton;
+    [SerializeField] private Button _backButton;
     public CinemachineCamera selectionCamera;
 
     private enum SelectionPhase { SingleSelect, MatchSelect }
@@ -27,10 +28,19 @@ public class CharacterSelection : MonoBehaviour
         if (confirmButton != null)
             confirmButton.gameObject.SetActive(false);
 
+        if (_backButton != null)
+            _backButton.gameObject.SetActive(false);
+
         if (searchedCharacter == null)
             InitializeSingleSelection();
         else
             InitializeMatchSelection();
+
+        if (_backButton != null)
+        {
+            _backButton.gameObject.SetActive(true);
+            _backButton.interactable = _currentPhase != SelectionPhase.SingleSelect;
+        }
 
         GameEvents.StateChanged += OnGameStateChanged;
     }
@@ -44,7 +54,13 @@ public class CharacterSelection : MonoBehaviour
             if (searchedCharacter == null)
                 InitializeSingleSelection();
             else
-                InitializeMatchSelection();   
+                InitializeMatchSelection();
+
+            if (_backButton != null)
+            {
+                _backButton.gameObject.SetActive(true);
+                _backButton.interactable = _currentPhase != SelectionPhase.SingleSelect;
+            }   
         } else if (state == GameState.Map)
         {
             ClearDisplays();
@@ -141,13 +157,22 @@ public class CharacterSelection : MonoBehaviour
         return true;
     }
 
+    public void CancelSelection()
+    {
+        FadeOutAndDeactivate();
+        GameEvents.TriggerSelectionCancelled();
+    }
+
     private void FadeOutAndDeactivate()
     {
         foreach (var display in _characterDisplays)
             display.FadeOut();
 
         if (confirmButton != null)
-            confirmButton.transform.DOScale(0f, 0.3f).SetEase(Ease.InBack);
+            confirmButton.transform.DOScale(0f, 0.3f).SetEase(Ease.InBack).OnComplete(() => confirmButton.transform.DOScale(1f, 0.01f));
+
+        if (_backButton != null)
+            _backButton.transform.DOScale(0f, 0.3f).SetEase(Ease.InBack).OnComplete(() => _backButton.transform.DOScale(1f, 0.01f));
 
     }
 
