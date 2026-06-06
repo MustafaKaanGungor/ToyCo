@@ -12,4 +12,6 @@ public static class GameEvents
     public static event Action<CharacterSO> OnCharacterConfirmed;
     public static void TriggerCharacterConfirmed(CharacterSO character) => OnCharacterConfirmed?.Invoke(character);
     public static  Action<Boy> InteractWithTribe;
+
+    public static Action<GameState> StateChanged;
 }

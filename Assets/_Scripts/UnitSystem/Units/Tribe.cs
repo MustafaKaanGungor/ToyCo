@@ -12,9 +12,11 @@ public class Tribe : MapUnit
     private void OnEnable()
     {
         GameEvents.InteractWithTribe += OnInteractWithTribe;
-        //GameEvents.CharachterConfirmed += OnSpawnSheep;
-        //GameEvents.CharachterConfirmed += OnSpawnWeddingPlace;
+        GameEvents.OnCharacterConfirmed += OnSpawnSheep;
+        GameEvents.OnCharacterConfirmed += OnSpawnWeddingPlace;
     }
+
+
     private void OnDisable()
     {
         GameEvents.InteractWithTribe -= OnInteractWithTribe;
@@ -32,7 +34,8 @@ public class Tribe : MapUnit
         {
             //Secim menusunu ac
             Debug.Log($"Interacted with tribe of type {TribeType}");
-            _isInteracted = true;
+            
+           // _isInteracted = true;
         }
     }
 
@@ -51,12 +54,11 @@ public class Tribe : MapUnit
     {
         //HandleTribeWithdrawal(initiator);
     }
-    private void OnSpawnSheep()
+    private void OnSpawnSheep(CharacterSO sO)
     {
 
     }
-    [ContextMenu("Spawn Wedding Place")]
-    private void OnSpawnWeddingPlace()
+    private void OnSpawnWeddingPlace(CharacterSO sO)
     {
         Vector2 spawnPos;
         int attempts = 0;

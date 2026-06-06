@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
+using Unity.Cinemachine;
 
 public class CharacterSelection : MonoBehaviour
 {
@@ -10,6 +11,7 @@ public class CharacterSelection : MonoBehaviour
     public GameObject characterPrefab;
     public List<Transform> characterPositions;
     public Button confirmButton;
+    public CinemachineCamera selectionCamera;
 
     private enum SelectionPhase { SingleSelect, MatchSelect }
     private SelectionPhase _currentPhase;
@@ -29,11 +31,33 @@ public class CharacterSelection : MonoBehaviour
             InitializeSingleSelection();
         else
             InitializeMatchSelection();
+
+        GameEvents.StateChanged += OnGameStateChanged;
     }
 
-    private void OnDisable()
+    private void OnGameStateChanged(GameState state)
+    {
+        if(state == GameState.Selection)
+        {
+            ClearDisplays();
+            selectionCamera.Priority = 10;
+            if (searchedCharacter == null)
+                InitializeSingleSelection();
+            else
+                InitializeMatchSelection();   
+        } else if (state == GameState.Map)
+        {
+            ClearDisplays();
+            selectionCamera.Priority = 0;
+        }
+    }
+
+
+    private void OnDestroy()
     {
         ClearDisplays();
+
+        GameEvents.StateChanged -= OnGameStateChanged;
     }
 
     private void ClearDisplays()
