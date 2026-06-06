@@ -12,8 +12,8 @@ public class Tribe : MapUnit
     private void OnEnable()
     {
         GameEvents.InteractWithTribe += OnInteractWithTribe;
-        GameEvents.OnCharacterConfirmed += OnSpawnSheep;
-        GameEvents.OnCharacterConfirmed += OnSpawnWeddingPlace;
+        //GameEvents.OnCharacterConfirmed += OnSpawnSheep;
+        //GameEvents.OnCharacterConfirmed += OnSpawnWeddingPlace;
     }
 
 
