@@ -33,6 +33,23 @@ public abstract class MapUnit : MonoBehaviour , IMapInteractable
     protected bool _isWaiting = false;
     protected float _waitTimer = 0f;
 
+    private CircleCollider2D _collider;
+    private ContactFilter2D _blockingFilter;
+    private readonly Collider2D[] _overlapBuffer = new Collider2D[4];
+
+    protected virtual void Awake()
+    {
+        _collider = GetComponent<CircleCollider2D>();
+        _blockingFilter = new ContactFilter2D();
+        _blockingFilter.SetLayerMask(LayerMask.GetMask("Lake"));
+        _blockingFilter.useTriggers = true;
+    }
+
+    protected bool IsPositionBlocked(Vector2 position)
+    {
+        return Physics2D.OverlapCircle(position, _collider.radius, _blockingFilter, _overlapBuffer) > 0;
+    }
+
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.TryGetComponent<IMapInteractable>(out var interactable))
@@ -76,7 +93,15 @@ public abstract class MapUnit : MonoBehaviour , IMapInteractable
     protected virtual void MoveTowardsTarget()
     {
         Vector2 currentPos = transform.position;
-        transform.position = Vector2.MoveTowards(currentPos, TargetPosition, _speed * Time.deltaTime);
+        Vector2 nextPos = Vector2.MoveTowards(currentPos, TargetPosition, _speed * Time.deltaTime);
+
+        if (IsPositionBlocked(nextPos))
+        {
+            SelectNextTarget();
+            return;
+        }
+
+        transform.position = nextPos;
 
         float directionX = TargetPosition.x - transform.position.x;
         if (Mathf.Abs(directionX) > 0.05f)
@@ -108,9 +133,17 @@ public abstract class MapUnit : MonoBehaviour , IMapInteractable
 
     protected Vector2 GetRandomPositionInBounds()
     {
-        float randomX = Random.Range(_minX, _maxX);
-        float randomY = Random.Range(_minY, _maxY);
-        return new Vector2(randomX, randomY);
+        for (int i = 0; i < 30; i++)
+        {
+            float randomX = Random.Range(_minX, _maxX);
+            float randomY = Random.Range(_minY, _maxY);
+            Vector2 candidate = new Vector2(randomX, randomY);
+            if (!IsPositionBlocked(candidate))
+                return candidate;
+        }
+        float fallbackX = Random.Range(_minX, _maxX);
+        float fallbackY = Random.Range(_minY, _maxY);
+        return new Vector2(fallbackX, fallbackY);
     }
 
     protected virtual void OnDrawGizmosSelected()

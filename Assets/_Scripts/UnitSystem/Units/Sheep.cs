@@ -41,7 +41,16 @@ public class Sheep : MapUnit
         if (_isFleeing)
         {
             Vector2 currentPos = transform.position;
-            transform.position = Vector2.MoveTowards(currentPos, TargetPosition, Speed * Time.deltaTime);
+            Vector2 nextPos = Vector2.MoveTowards(currentPos, TargetPosition, Speed * Time.deltaTime);
+
+            if (IsPositionBlocked(nextPos))
+            {
+                _isFleeing = false;
+                SelectNextTarget();
+                return;
+            }
+
+            transform.position = nextPos;
 
             float directionX = TargetPosition.x - transform.position.x;
             if (Mathf.Abs(directionX) > 0.05f)
