@@ -6,16 +6,20 @@ public class Tribe : MapUnit
     [SerializeField] private Boy _tribeType;
     public Boy TribeType => _tribeType;
     private bool _isInteracted = false;
+    [SerializeField] private GameObject _sheepPrefab;
+    [SerializeField] private GameObject _weddingPlacePrefab;
+    [SerializeField] private float _weddingPlaceMinDistance = 5f;
     private void OnEnable()
     {
         GameEvents.InteractWithTribe += OnInteractWithTribe;
         //GameEvents.CharachterConfirmed += OnSpawnSheep;
+        //GameEvents.CharachterConfirmed += OnSpawnWeddingPlace;
     }
     private void OnDisable()
     {
         GameEvents.InteractWithTribe -= OnInteractWithTribe;
         //GameEvents.CharachterConfirmed -= OnSpawnSheep;
-
+        //GameEvents.CharachterConfirmed -= OnSpawnWeddingPlace;
     }
 
     private void OnInteractWithTribe(Boy boy)
@@ -50,5 +54,19 @@ public class Tribe : MapUnit
     private void OnSpawnSheep()
     {
 
+    }
+    [ContextMenu("Spawn Wedding Place")]
+    private void OnSpawnWeddingPlace()
+    {
+        Vector2 spawnPos;
+        int attempts = 0;
+        do
+        {
+            spawnPos = GetRandomPositionInBounds();
+            attempts++;
+        }
+        while (Vector2.Distance(spawnPos, transform.position) < _weddingPlaceMinDistance && attempts < 30);
+
+        Instantiate(_weddingPlacePrefab, spawnPos, Quaternion.identity);
     }
 }

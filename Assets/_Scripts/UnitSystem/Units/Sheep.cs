@@ -4,6 +4,18 @@ public class Sheep : MapUnit
 {
     [SerializeField] private float _fleeDistance = 4f;
     private bool _isFleeing = false;
+    private int _sheepCount;
+    public int SheepCount => _sheepCount;
+    private int _currentSheepCount;
+    protected override void Start()
+    {
+        base.Start();
+    }
+    public void InitializeSheep(int count)
+    {
+        _sheepCount = count;
+        _currentSheepCount = count;
+    }
 
     private void ForceMoveTo(Vector2 target)
     {
@@ -46,6 +58,19 @@ public class Sheep : MapUnit
         else
         {
             base.Update();
+        }
+    }
+    public void DestroySheep()
+    {
+        //bir flagi degistirmeli
+        Destroy(gameObject);
+    }
+    public void ReduceSheepCount(int amount)
+    {
+        _currentSheepCount -= amount;
+        if (_currentSheepCount <= 0)
+        {
+            DestroySheep();
         }
     }
 }
