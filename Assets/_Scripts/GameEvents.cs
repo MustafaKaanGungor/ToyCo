@@ -5,4 +5,5 @@ public static class GameEvents
 {
     public static event Action<Vector2> OnMoveInput;
     public static void TriggerMoveInput(Vector2 input) => OnMoveInput?.Invoke(input);
+    public static  Action<Boy> InteractWithTribe;
 }

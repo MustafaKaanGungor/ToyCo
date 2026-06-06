@@ -1,8 +1,7 @@
 using UnityEngine;
-
 [RequireComponent(typeof(CircleCollider2D))]
 [RequireComponent(typeof(Rigidbody2D))]
-public abstract class MapUnit : MonoBehaviour
+public abstract class MapUnit : MonoBehaviour , IMapInteractable
 {
     [Header("Map Borders")]
     [SerializeField] private float _minX = -10f;
@@ -31,18 +30,29 @@ public abstract class MapUnit : MonoBehaviour
     // Alt sınıfların hem okuyup hem değiştirebilmesi gereken mülk (Property)
     protected Vector2 TargetPosition { get; set; }
 
-    private bool _isWaiting = false;
-    private float _waitTimer = 0f;
+    protected bool _isWaiting = false;
+    protected float _waitTimer = 0f;
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.TryGetComponent<MapUnit>(out var otherUnit))
+        if (other.TryGetComponent<IMapInteractable>(out var interactable))
         {
-            Interact(otherUnit);
+            interactable.OnInteracted(this);
+        }
+        if (other.TryGetComponent<Player>(out var player))
+        {
+            OnPlayerInteracted(player);
         }
     }
 
-    protected virtual void Interact(MapUnit other) { }
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        if (other.TryGetComponent<IMapInteractable>(out var interactable))
+        {
+            interactable.OnWithdraw(this);
+        }
+    }
+
 
     protected virtual void Start()
     {
@@ -110,4 +120,14 @@ public abstract class MapUnit : MonoBehaviour
         Vector3 size = new Vector3(_maxX - _minX, _maxY - _minY, 0.1f);
         Gizmos.DrawWireCube(center, size);
     }
+
+    public virtual void OnInteracted(MapUnit initiator)
+    {
+        
+    }
+
+    public virtual void OnWithdraw(MapUnit initiator)
+    {
+    }
+    public virtual void OnPlayerInteracted(Player player) { }
 }
