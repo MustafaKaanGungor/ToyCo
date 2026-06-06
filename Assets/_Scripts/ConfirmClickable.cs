@@ -19,6 +19,7 @@ public class ConfirmClickable : MonoBehaviour
 
     private void OnEnable()
     {
+        _button.interactable = true;
         transform.localScale = Vector3.zero;
         transform.DOScale(_originalScale, 0.3f).SetEase(Ease.OutBack);
     }
@@ -28,9 +29,14 @@ public class ConfirmClickable : MonoBehaviour
         if (_selection == null)
             return;
 
-        _button.interactable = false;
-        transform.DOPunchScale(Vector3.one * 0.15f, 0.2f, 2)
-            .OnComplete(() => _selection.ConfirmSelection());
+        bool confirmed = _selection.ConfirmSelection();
+
+        if (!confirmed)
+        {
+            _button.interactable = false;
+            transform.DOShakePosition(0.3f, new Vector3(5f, 0f, 0f), 20, 90f, false, false)
+                .OnComplete(() => _button.interactable = true);
+        }
     }
 
     private void OnDestroy()
