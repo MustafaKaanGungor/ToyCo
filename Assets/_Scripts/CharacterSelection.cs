@@ -147,7 +147,7 @@ public class CharacterSelection : MonoBehaviour
             display.FadeOut();
 
         if (confirmButton != null)
-            confirmButton.transform.DOScale(0f, 0.3f).SetEase(Ease.InBack);
+            confirmButton.transform.DOScale(0f, 0.3f).SetEase(Ease.InBack).OnComplete(() => confirmButton.transform.DOScale(1f, 0.01f));
 
     }
 
