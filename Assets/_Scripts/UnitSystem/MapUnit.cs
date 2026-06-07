@@ -137,7 +137,7 @@ public abstract class MapUnit : MonoBehaviour , IMapInteractable
         _waitTimer = Random.Range(_minWaitTime, _maxWaitTime);
     }
 
-    private void HandleWaiting()
+    protected virtual void HandleWaiting()
     {
         _waitTimer -= Time.deltaTime;
         if (_waitTimer <= 0)

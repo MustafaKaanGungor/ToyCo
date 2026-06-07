@@ -40,8 +40,8 @@ public class Player : MonoBehaviour, IMapInteractable
         if (initiator is Tribe tribe)
         {
             GameEvents.InteractWithTribe?.Invoke(tribe.TribeType);
-            GameEvents.SpawnSheep?.Invoke();
-            GameEvents.SpawnWeddingPlace?.Invoke();
+            GameEvents.SpawnSheep?.Invoke(tribe.TribeType);
+            GameEvents.SpawnWeddingPlace?.Invoke(tribe.TribeType);
         }
     }
     public void OnWithdraw(MapUnit initiator)

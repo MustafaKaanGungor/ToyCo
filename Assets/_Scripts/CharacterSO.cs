@@ -71,7 +71,9 @@ public enum Boy
 {
     Boy1,
     Boy2,
-    Boy3
+    Boy3,
+    Boy4,
+    Boy5
 }
 
 public enum Gender

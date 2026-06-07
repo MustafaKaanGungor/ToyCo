@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 
 public class Sheep : MapUnit
@@ -7,6 +8,12 @@ public class Sheep : MapUnit
     private int _sheepCount;
     public int SheepCount => _sheepCount;
     private int _currentSheepCount;
+    [Header("Penguen Sallanma Ayarlarý")]
+    public float waddleSpeed = 12f;
+    public float waddleAngle = 15f;
+
+    [Header("Text")]
+    [SerializeField]private TMP_Text _sheepCountText;
     protected override void Start()
     {
         base.Start();
@@ -15,6 +22,7 @@ public class Sheep : MapUnit
     {
         _sheepCount = count;
         _currentSheepCount = count;
+        _sheepCountText.text = _currentSheepCount.ToString();
     }
 
     private void ForceMoveTo(Vector2 target)
@@ -42,6 +50,8 @@ public class Sheep : MapUnit
         {
             Vector2 currentPos = transform.position;
             Vector2 nextPos = Vector2.MoveTowards(currentPos, TargetPosition, Speed * Time.deltaTime);
+            float waddle = Mathf.Sin(Time.time * waddleSpeed) * waddleAngle;
+            transform.rotation = Quaternion.Euler(0, 0, waddle);
 
             if (IsPositionBlocked(nextPos))
             {
@@ -81,5 +91,18 @@ public class Sheep : MapUnit
         {
             DestroySheep();
         }
+    }
+    protected override void MoveTowardsTarget()
+    {
+        base.MoveTowardsTarget();
+        float waddle = Mathf.Sin(Time.time * waddleSpeed) * waddleAngle;
+        transform.rotation = Quaternion.Euler(0, 0, waddle);
+
+    }
+    protected override void HandleWaiting()
+    {
+        base.HandleWaiting();
+        transform.rotation = Quaternion.identity;
+
     }
 }
