@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Char3
   m_EditorClassIdentifier: 
   characterName: merve
-  characterSprite: {fileID: 7482667652216324306, guid: 48e93eef0688c4a259cb0eddcd8661f7, type: 3}
+  characterSprite: {fileID: 21300000, guid: 0df6ebcda33000e42bdf6e62e2199ecd, type: 3}
   gender: 0
   boy: 0
   hairStyle: 0

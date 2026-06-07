@@ -7,6 +7,7 @@ public class WeddingPlace : MonoBehaviour, IMapInteractable
         if(initiator is Sheep sheep)
         {
             sheep.DestroySheep();
+            GameEvents.SheepDelivered?.Invoke();
         }
     }
 

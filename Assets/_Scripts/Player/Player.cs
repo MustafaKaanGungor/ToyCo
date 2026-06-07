@@ -5,15 +5,30 @@ public class Player : MonoBehaviour, IMapInteractable
 {
     private Rigidbody2D _rb;
     private Collider2D _collider;
-
+    private bool didSheepTaken = false;
 
     private void OnEnable()
     {
         GameEvents.StateChanged += OnGameStateChanged;
+        GameEvents.SpawnSheep += OnSpawnSheep;
+        GameEvents.SheepDelivered += OnSheepDelivered;
     }
+
+    private void OnSheepDelivered()
+    {
+        didSheepTaken = false;
+    }
+
+    private void OnSpawnSheep(Boy boy)
+    {
+        didSheepTaken = true;
+    }
+
     private void OnDisable()
     {
         GameEvents.StateChanged -= OnGameStateChanged;
+        GameEvents.SpawnSheep -= OnSpawnSheep;
+        GameEvents.SheepDelivered -= OnSheepDelivered;
     }
 
     private void OnGameStateChanged(GameState state)
@@ -36,7 +51,12 @@ public class Player : MonoBehaviour, IMapInteractable
         _rb = GetComponent<Rigidbody2D>();
     }
     public void OnInteracted(MapUnit initiator)
-    {
+    {   
+        if (didSheepTaken)
+        {
+            return;
+        }
+        
         if (initiator is Tribe tribe)
         {
             GameEvents.InteractWithTribe?.Invoke(tribe.TribeType);
