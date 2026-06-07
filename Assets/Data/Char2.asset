@@ -12,8 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47d3a5c2c44aaa944af228603180d932, type: 3}
   m_Name: Char2
   m_EditorClassIdentifier: 
-  characterName: kevser
-  characterSprite: {fileID: -2413806693520163455, guid: 4adeaf2d2b1c7417e89f026626d8264f, type: 3}
+  characterName: alparslan
+  characterSprite: {fileID: 21300000, guid: f1c3caa91ea513047aea60dd37bebd52, type: 3}
+  gender: 0
   boy: 0
   hairStyle: 0
   eyeStyle: 0

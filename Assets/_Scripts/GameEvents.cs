@@ -20,6 +20,7 @@ public static class GameEvents
     public static Action<Boy> SpawnSheep;
 
     public static Action<Boy> SpawnWeddingPlace;
+    public static Action SheepDelivered;
     public static Action OpenSlecetionPanel;
 }
                        
