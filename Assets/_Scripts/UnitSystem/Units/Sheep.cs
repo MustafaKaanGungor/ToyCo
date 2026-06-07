@@ -8,7 +8,7 @@ public class Sheep : MapUnit
     private int _sheepCount;
     public int SheepCount => _sheepCount;
     private int _currentSheepCount;
-    [Header("Penguen Sallanma Ayarlarý")]
+    [Header("Penguen Sallanma Ayarlarï¿½")]
     public float waddleSpeed = 12f;
     public float waddleAngle = 15f;
 
@@ -51,7 +51,7 @@ public class Sheep : MapUnit
             Vector2 currentPos = transform.position;
             Vector2 nextPos = Vector2.MoveTowards(currentPos, TargetPosition, Speed * Time.deltaTime);
             float waddle = Mathf.Sin(Time.time * waddleSpeed) * waddleAngle;
-            transform.rotation = Quaternion.Euler(0, 0, waddle);
+            _visualTransform.rotation = Quaternion.Euler(0, 0, waddle);
 
             if (IsPositionBlocked(nextPos))
             {
@@ -65,7 +65,7 @@ public class Sheep : MapUnit
             float directionX = TargetPosition.x - transform.position.x;
             if (Mathf.Abs(directionX) > 0.05f)
             {
-                transform.localScale = new Vector3(directionX > 0 ? 1 : -1, 1, 1);
+                _visualTransform.localScale = new Vector3(directionX > 0 ? 1 : -1, 1, 1);
             }
 
             if (Vector2.Distance(transform.position, TargetPosition) < StopDistance)
@@ -96,13 +96,13 @@ public class Sheep : MapUnit
     {
         base.MoveTowardsTarget();
         float waddle = Mathf.Sin(Time.time * waddleSpeed) * waddleAngle;
-        transform.rotation = Quaternion.Euler(0, 0, waddle);
+        _visualTransform.transform.rotation = Quaternion.Euler(0, 0, waddle);
 
     }
     protected override void HandleWaiting()
     {
         base.HandleWaiting();
-        transform.rotation = Quaternion.identity;
+        _visualTransform.transform.rotation = Quaternion.identity;
 
     }
 }

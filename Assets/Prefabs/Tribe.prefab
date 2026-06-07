@@ -261,6 +261,7 @@ MonoBehaviour:
   _stopDistance: 0.1
   _minWaitTime: 1
   _maxWaitTime: 3
+  _visualTransform: {fileID: 8211990502109673832}
   _tribeType: 0
   _sheepPrefab: {fileID: 0}
   _weddingPlacePrefab: {fileID: 3104450426495174354, guid: d0d01d9469eb5ae4b862d10decc56e84, type: 3}

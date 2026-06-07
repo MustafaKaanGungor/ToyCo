@@ -37,6 +37,7 @@ public abstract class MapUnit : MonoBehaviour , IMapInteractable
     private CircleCollider2D _collider;
     private ContactFilter2D _blockingFilter;
     private readonly Collider2D[] _overlapBuffer = new Collider2D[4];
+    public Transform _visualTransform;
 
     protected virtual void Awake()
     {
@@ -122,7 +123,7 @@ public abstract class MapUnit : MonoBehaviour , IMapInteractable
         float directionX = TargetPosition.x - transform.position.x;
         if (Mathf.Abs(directionX) > 0.05f)
         {
-            transform.localScale = new Vector3(directionX > 0 ? 1 : -1, 1, 1);
+            _visualTransform.localScale = new Vector3(directionX > 0 ? 1 : -1, 1, 1);
         }
 
         if (Vector2.Distance(transform.position, TargetPosition) < _stopDistance)
