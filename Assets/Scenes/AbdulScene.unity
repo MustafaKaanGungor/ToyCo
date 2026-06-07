@@ -518,6 +518,14 @@ PrefabInstance:
       propertyPath: selectionCamera
       value: 
       objectReference: {fileID: 455991778}
+    - target: {fileID: 1521522789936507828, guid: b535b72c7f467794c88a5c2a9ff84c35, type: 3}
+      propertyPath: characterList.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1521522789936507828, guid: b535b72c7f467794c88a5c2a9ff84c35, type: 3}
+      propertyPath: 'characterList.Array.data[3]'
+      value: 
+      objectReference: {fileID: 11400000, guid: a64a05d07e4aab74f984b3b06d3595f9, type: 2}
     - target: {fileID: 2784305410117726319, guid: b535b72c7f467794c88a5c2a9ff84c35, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -990,6 +998,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8457779422650174625, guid: 4f7cadab2dddf1740a232b61d7593ea1, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 4918263342015287579, guid: 72401085de76896429c6ec35951d5926, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1095,6 +1107,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8457779422650174625, guid: 4f7cadab2dddf1740a232b61d7593ea1, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 4132048322091750402, guid: c5545131334e8b34e8734d82a6d77314, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1390,8 +1406,8 @@ SpriteRenderer:
   m_SortingLayerID: -564638265
   m_SortingLayer: 1
   m_SortingOrder: 0
-  m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 1, g: 0, b: 0, a: 1}
+  m_Sprite: {fileID: 4719170963162181776, guid: 97bc99dbc6381b845ba7db994ef74efa, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -1483,7 +1499,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1}
+    oldSize: {x: 2.3975, y: 2.6975}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -1842,6 +1858,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8457779422650174625, guid: 4f7cadab2dddf1740a232b61d7593ea1, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 3802167060819629151, guid: ff14d369cae4c45409f18f4cad94890a, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2271,6 +2291,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8457779422650174625, guid: 4f7cadab2dddf1740a232b61d7593ea1, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: -3632216144220894732, guid: 72adf60f6fbe2cf40b528833290303e9, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -3045,6 +3069,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8457779422650174625, guid: 4f7cadab2dddf1740a232b61d7593ea1, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: -4998639757804979255, guid: e8db797acb952d14995cfb1c16dae34c, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
