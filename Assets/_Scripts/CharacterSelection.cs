@@ -14,6 +14,9 @@ public class CharacterSelection : MonoBehaviour
     [SerializeField] private Button _backButton;
     public CinemachineCamera selectionCamera;
 
+    [Header("Single Selection")]
+    [SerializeField] private CharacterSO _singleSelectCharacter;
+
     private enum SelectionPhase { SingleSelect, MatchSelect }
     private SelectionPhase _currentPhase;
 
@@ -88,34 +91,42 @@ public class CharacterSelection : MonoBehaviour
     private void InitializeSingleSelection()
     {
         _currentPhase = SelectionPhase.SingleSelect;
-        CharacterSO chosen = characterList[Random.Range(0, characterList.Count)];
-        SpawnCharacter(chosen, characterPositions[0]);
+        SpawnCharacter(_singleSelectCharacter, characterPositions[0].position);
     }
 
     private void InitializeMatchSelection()
     {
         _currentPhase = SelectionPhase.MatchSelect;
 
-        List<CharacterSO> pool = new List<CharacterSO>(characterList);
-        pool.Remove(searchedCharacter);
+        searchedCharacter = characterList[Random.Range(0, characterList.Count)];
 
-        List<CharacterSO> picked = new List<CharacterSO> { searchedCharacter };
-        for (int i = 0; i < 2 && pool.Count > 0; i++)
-        {
-            int idx = Random.Range(0, pool.Count);
-            picked.Add(pool[idx]);
-            pool.RemoveAt(idx);
-        }
-
+        List<CharacterSO> picked = new List<CharacterSO>(characterList);
         Shuffle(picked);
 
         for (int i = 0; i < picked.Count; i++)
-            SpawnCharacter(picked[i], characterPositions[i]);
+            SpawnCharacter(picked[i], GetCharacterPosition(i, picked.Count));
     }
 
-    private void SpawnCharacter(CharacterSO data, Transform position)
+    private Vector3 GetCharacterPosition(int index, int total)
     {
-        var character = Instantiate(characterPrefab, position.position, Quaternion.identity, transform);
+        if (characterPositions.Count == 0)
+            return Vector3.zero;
+
+        if (total <= characterPositions.Count && index < characterPositions.Count)
+            return characterPositions[index].position;
+
+        if (characterPositions.Count < 2)
+            return characterPositions[0].position;
+
+        Vector3 leftPos = characterPositions[0].position;
+        Vector3 rightPos = characterPositions[characterPositions.Count - 1].position;
+        float spacing = (rightPos.x - leftPos.x) / Mathf.Max(total - 1, 1);
+        return leftPos + new Vector3(spacing * index, 0f, 0f);
+    }
+
+    private void SpawnCharacter(CharacterSO data, Vector3 position)
+    {
+        var character = Instantiate(characterPrefab, position, Quaternion.identity, transform);
         var display = character.GetComponent<CharacterDisplay>();
         display.Initialize(data, this);
         _characterDisplays.Add(display);

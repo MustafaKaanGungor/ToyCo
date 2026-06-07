@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Char1
   m_EditorClassIdentifier: 
   characterName: "Abd\xFClhamid"
-  characterSprite: {fileID: 21300000, guid: 12f0d6f526eb77a4db8249539124a86f, type: 3}
+  characterSprite: {fileID: 21300000, guid: 91fc99e3f129f5f48ae5d313c63b6bf8, type: 3}
   gender: 0
   boy: 0
   hairStyle: 0
