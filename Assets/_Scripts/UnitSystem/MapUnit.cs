@@ -17,6 +17,10 @@ public abstract class MapUnit : MonoBehaviour , IMapInteractable
     [SerializeField] private float _minWaitTime = 1f;
     [SerializeField] private float _maxWaitTime = 3f;
 
+    [Header("Interaction Settings")]
+    [SerializeField] private float _interactCooldown = 1.5f;
+    private float _interactCooldownTimer;
+
     // Private alanların alt sınıflar tarafından okunabilmesi için Encapsulation (Kapsülleme)
     protected float MinX => _minX;
     protected float MaxX => _maxX;
@@ -34,6 +38,9 @@ public abstract class MapUnit : MonoBehaviour , IMapInteractable
     protected float _waitTimer = 0f;
     private bool _isMovementEnabled = true;
 
+    [Header("Block Check")]
+    [SerializeField] private float _blockCheckRadius = 0.5f;
+
     private CircleCollider2D _collider;
     private ContactFilter2D _blockingFilter;
     private readonly Collider2D[] _overlapBuffer = new Collider2D[4];
@@ -49,7 +56,7 @@ public abstract class MapUnit : MonoBehaviour , IMapInteractable
 
     protected bool IsPositionBlocked(Vector2 position)
     {
-        return Physics2D.OverlapCircle(position, _collider.radius, _blockingFilter, _overlapBuffer) > 0;
+        return Physics2D.OverlapCircle(position, _blockCheckRadius, _blockingFilter, _overlapBuffer) > 0;
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -61,6 +68,7 @@ public abstract class MapUnit : MonoBehaviour , IMapInteractable
         if (other.TryGetComponent<Player>(out var player))
         {
             OnPlayerInteracted(player);
+            _interactCooldownTimer = _interactCooldown;
         }
     }
 
@@ -69,6 +77,18 @@ public abstract class MapUnit : MonoBehaviour , IMapInteractable
         if (other.TryGetComponent<IMapInteractable>(out var interactable))
         {
             interactable.OnWithdraw(this);
+        }
+    }
+
+    private void OnTriggerStay2D(Collider2D other)
+    {
+        if (other.TryGetComponent<Player>(out var player))
+        {
+            if (_interactCooldownTimer <= 0f)
+            {
+                OnPlayerInteracted(player);
+                _interactCooldownTimer = _interactCooldown;
+            }
         }
     }
 
@@ -90,6 +110,11 @@ public abstract class MapUnit : MonoBehaviour , IMapInteractable
 
     protected virtual void Update()
     {
+        if (_interactCooldownTimer > 0)
+        {
+            _interactCooldownTimer -= Time.deltaTime;
+        }
+
         if (!_isMovementEnabled)
         {
             return;

@@ -119,6 +119,7 @@ MonoBehaviour:
   _stopDistance: 0.1
   _minWaitTime: 1
   _maxWaitTime: 3
+  _interactCooldown: 0.25
   _visualTransform: {fileID: 2438749763764954681}
   _fleeDistance: 4
   waddleSpeed: 12
