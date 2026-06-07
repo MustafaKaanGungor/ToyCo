@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 47d3a5c2c44aaa944af228603180d932, type: 3}
-  m_Name: Char2
+  m_Name: Char2 1
   m_EditorClassIdentifier: 
-  characterName: alparslan
-  characterSprite: {fileID: 21300000, guid: 81e7413dabb858946a4241edafaccb26, type: 3}
+  characterName: mustafa
+  characterSprite: {fileID: 21300000, guid: 1cac205af82c43744a685dc902b6bc86, type: 3}
   gender: 0
   boy: 0
   hairStyle: 0
