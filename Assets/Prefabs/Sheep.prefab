@@ -111,10 +111,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e022007081a53514594772d5c57f759d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _minX: -10
-  _maxX: 10
-  _minY: -10
-  _maxY: 10
+  _minX: -38
+  _maxX: 38
+  _minY: -21
+  _maxY: 21
   _speed: 2
   _stopDistance: 0.1
   _minWaitTime: 1

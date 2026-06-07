@@ -42,6 +42,7 @@ public class Sheep : MapUnit
         Vector2 fleeDir = (transform.position - player.transform.position).normalized;
         ForceMoveTo((Vector2)transform.position + fleeDir * _fleeDistance);
         _isFleeing = true;
+        GameEvents.TriggerPlaySound(SfxType.Sfx_Sheep);
     }
 
     protected override void Update()
@@ -111,6 +112,7 @@ public class Sheep : MapUnit
         if (initiator is Wolf)
         {
             ReduceSheepCount(5);
+            GameEvents.TriggerPlaySound(SfxType.Sfx_Sheep);
             Debug.Log("Sheep was attacked by a wolf!");
         }
     }

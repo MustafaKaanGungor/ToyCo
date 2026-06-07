@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Audio;
 
 public class PlayeController : MonoBehaviour
 {
@@ -8,7 +9,8 @@ public class PlayeController : MonoBehaviour
     private float _baseVisualY;
     [Header("Penguen Sallanma Ayarlarý")]
     public float waddleSpeed = 12f;  
-    public float waddleAngle = 15f;  
+    public float waddleAngle = 15f;
+
     private void OnEnable()
     {
         GameEvents.OnMoveInput += OnMove;
@@ -28,6 +30,8 @@ public class PlayeController : MonoBehaviour
         {
             float waddle = Mathf.Sin(Time.time * waddleSpeed) * waddleAngle;
             transform.rotation = Quaternion.Euler(0, 0, waddle);
+            GameEvents.TriggerPlaySound(SfxType.Sfx_Horse);
+            //GameEvents.TriggerPlaySound(SfxType.Sfx_Click);
         }
         else
         {
@@ -41,7 +45,6 @@ public class PlayeController : MonoBehaviour
     private void OnMove(Vector2 value)
     {
         _moveInput = value;
-
         FlipSprite(_moveInput);
     }
     private void FlipSprite(Vector2 value)

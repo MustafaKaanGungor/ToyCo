@@ -22,5 +22,14 @@ public static class GameEvents
     public static Action<Boy> SpawnWeddingPlace;
     public static Action SheepDelivered;
     public static Action OpenSlecetionPanel;
+    //auido
+    public static Action<SfxType> PlaySound;
+    public static Action StopSfx;
+    public static event Action<MusicType> PlayMusic;
+    public static event Action<bool> StopMusic; // bool = fade?
+    public static void TriggerPlaySound(SfxType type) => PlaySound?.Invoke(type);
+    public static void TriggerStopSfx() => StopSfx?.Invoke();
+    public static void TriggerPlayMusic(MusicType type) => PlayMusic?.Invoke(type);
+    public static void TriggerStopMusic(bool fade = true) => StopMusic?.Invoke(fade);
 }
                        

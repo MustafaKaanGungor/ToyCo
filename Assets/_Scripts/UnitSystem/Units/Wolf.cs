@@ -50,8 +50,7 @@ public class Wolf : MapUnit
     {
         if (initiator is Sheep sheep)
         {
-            //player.TakeDamage(10);
-            //Debug.Log("Wolf attacked the player!");
+            GameEvents.TriggerPlaySound(SfxType.Sfx_WolfBark);
         }
     }
     private void ForceMoveTo(Vector2 target)
@@ -65,6 +64,7 @@ public class Wolf : MapUnit
         Vector2 fleeDir = (transform.position - player.transform.position).normalized;
         ForceMoveTo((Vector2)transform.position + fleeDir * _fleeDistance);
         _isFleeing = true;
+        GameEvents.TriggerPlaySound(SfxType.Sfx_Wolf);
     }
     protected override void MoveTowardsTarget()
     {
