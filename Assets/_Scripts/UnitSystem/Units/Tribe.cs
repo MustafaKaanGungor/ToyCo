@@ -34,7 +34,7 @@ public class Tribe : MapUnit
         {
             //Secim menusunu ac
             Debug.Log($"Interacted with tribe of type {TribeType}");
-            
+
             _isInteracted = true;
         }
     }
@@ -56,9 +56,10 @@ public class Tribe : MapUnit
     }
     private void OnSpawnSheep(Boy boy)
     {
-        if(TribeType == boy)
+        if (TribeType == boy)
         {
-         GameObject sheep = Instantiate(_sheepPrefab, transform.position, Quaternion.identity);
+            GameObject sheep = Instantiate(_sheepPrefab, transform.position, Quaternion.identity);
+            sheep.GetComponent<Sheep>().InitializeSheep(25);
         }
     }
     private void OnSpawnWeddingPlace(Boy boy)
