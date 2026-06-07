@@ -34,7 +34,7 @@ public class Tribe : MapUnit
         {
             //Secim menusunu ac
             Debug.Log($"Interacted with tribe of type {TribeType}");
-
+            GameEvents.OpenSlecetionPanel?.Invoke();
             _isInteracted = true;
         }
     }

@@ -23,6 +23,7 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
+        //GameEvents.OpenSlecetionPanel += () => SetGameState(GameState.Selection);
         GameEvents.InteractWithTribe += (Boy boy) => SetGameState(GameState.Selection);
         GameEvents.OnCharacterConfirmed += (CharacterSO character) => SetGameState(GameState.Map);
         GameEvents.OnSelectionCancelled += () => SetGameState(GameState.Map);
