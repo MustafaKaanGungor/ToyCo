@@ -49,6 +49,8 @@ public class SlidePanel : MonoBehaviour
 
     public void Toggle()
     {
+        GameEvents.TriggerPlaySound(SfxType.Sfx_Click);
+
         if (_isVisible)
             SlideOut();
         else

@@ -26,6 +26,8 @@ public class ConfirmClickable : MonoBehaviour
 
     private void OnConfirmClicked()
     {
+        GameEvents.TriggerPlaySound(SfxType.Sfx_Click);
+
         if (_selection == null)
             return;
 

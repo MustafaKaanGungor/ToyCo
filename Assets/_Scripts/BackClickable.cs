@@ -25,6 +25,8 @@ public class BackClickable : MonoBehaviour
 
     private void OnBackClicked()
     {
+        GameEvents.TriggerPlaySound(SfxType.Sfx_Click);
+
         if (_selection == null)
             return;
 

@@ -19,11 +19,11 @@ public class CharacterSO : ScriptableObject
             switch((HairStyle)(object)style)
             {
                 case HairStyle.hair1:
-                    return "Hair: Hair 1";
+                    return "Hafif Esmer";
                 case HairStyle.hair2:
-                    return "Hair: Hair 2";
+                    return "Esmer";
                 case HairStyle.hair3:
-                    return "Hair: Hair 3";
+                    return "Beyaz Teli";
             }
         }
         else if(style is EyeStyle)
@@ -31,11 +31,11 @@ public class CharacterSO : ScriptableObject
             switch((EyeStyle)(object)style)
             {
                 case EyeStyle.eye1:
-                    return "Eyes: Eyes 1";
+                    return "Mavi Gözlü";
                 case EyeStyle.eye2:
-                    return "Eyes: Eyes 2";
+                    return "Kısa Saçlı";
                 case EyeStyle.eye3:
-                    return "Eyes: Eyes 3";
+                    return "Uzun Saçlı";
             }
         }
         else if(style is MouthStyle)
@@ -43,11 +43,11 @@ public class CharacterSO : ScriptableObject
             switch((MouthStyle)(object)style)
             {
                 case MouthStyle.mouth1:
-                    return "Mouth: Mouth 1";
+                    return "Ağır Başlı";
                 case MouthStyle.mouth2:
-                    return "Mouth: Mouth 2";
+                    return "Güler Yüzlü";
                 case MouthStyle.mouth3:
-                    return "Mouth: Mouth 3";
+                    return "Sert Bakışlı";
             }
         }
         else if(style is BodyStyle)
@@ -55,11 +55,11 @@ public class CharacterSO : ScriptableObject
             switch((BodyStyle)(object)style)
             {
                 case BodyStyle.body1:
-                    return "Body: Body 1";
+                    return "Sakalsız";
                 case BodyStyle.body2:
-                    return "Body: Body 2";
+                    return "Bıyıklı";
                 case BodyStyle.body3:
-                    return "Body: Body 3";
+                    return "Soğukkanlı";
             }
         }
 
