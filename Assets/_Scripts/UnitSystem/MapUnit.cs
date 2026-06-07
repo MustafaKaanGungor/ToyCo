@@ -71,7 +71,6 @@ public abstract class MapUnit : MonoBehaviour , IMapInteractable
             _interactCooldownTimer = _interactCooldown;
         }
     }
-
     private void OnTriggerExit2D(Collider2D other)
     {
         if (other.TryGetComponent<IMapInteractable>(out var interactable))

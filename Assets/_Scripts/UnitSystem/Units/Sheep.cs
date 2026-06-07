@@ -111,9 +111,14 @@ public class Sheep : MapUnit
     {
         if (initiator is Wolf)
         {
-            ReduceSheepCount(5);
-            GameEvents.TriggerPlaySound(SfxType.Sfx_Sheep);
-            Debug.Log("Sheep was attacked by a wolf!");
+            Vector2 distance = transform.position - initiator.transform.position;
+            if (distance.magnitude < 1.5f)
+            {
+
+                ReduceSheepCount(5);
+                GameEvents.TriggerPlaySound(SfxType.Sfx_Sheep);
+                Debug.Log("Sheep was attacked by a wolf!");
+            }
         }
     }
 }
