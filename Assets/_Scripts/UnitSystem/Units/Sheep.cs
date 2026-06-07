@@ -13,7 +13,7 @@ public class Sheep : MapUnit
     public float waddleAngle = 15f;
 
     [Header("Text")]
-    [SerializeField]private TMP_Text _sheepCountText;
+    [SerializeField] private TMP_Text _sheepCountText;
     protected override void Start()
     {
         base.Start();
@@ -84,9 +84,10 @@ public class Sheep : MapUnit
         //bir flagi degistirmeli
         Destroy(gameObject);
     }
-    public void ReduceSheepCount(int amount)
+    private void ReduceSheepCount(int amount)
     {
         _currentSheepCount -= amount;
+        _sheepCountText.text = _currentSheepCount.ToString();
         if (_currentSheepCount <= 0)
         {
             DestroySheep();
@@ -104,5 +105,13 @@ public class Sheep : MapUnit
         base.HandleWaiting();
         transform.rotation = Quaternion.identity;
 
+    }
+    public override void OnInteracted(MapUnit initiator)
+    {
+        if (initiator is Wolf)
+        {
+            ReduceSheepCount(5);
+            Debug.Log("Sheep was attacked by a wolf!");
+        }
     }
 }
