@@ -6,6 +6,7 @@ public class Player : MonoBehaviour, IMapInteractable
     private Rigidbody2D _rb;
     private Collider2D _collider;
     private bool didSheepTaken = false;
+    [SerializeField] private Canvas _endCanvas;
 
     private void OnEnable()
     {
@@ -17,6 +18,7 @@ public class Player : MonoBehaviour, IMapInteractable
     private void OnSheepDelivered()
     {
         didSheepTaken = false;
+        _endCanvas.gameObject.SetActive(true);
     }
 
     private void OnSpawnSheep(Boy boy)
