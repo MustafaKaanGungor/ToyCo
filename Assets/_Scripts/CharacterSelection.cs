@@ -9,6 +9,7 @@ public class CharacterSelection : MonoBehaviour
     public CharacterSO searchedCharacter;
     public List<CharacterSO> characterList;
     public GameObject characterPrefab;
+    public GameObject traitPanelPrefab;
     public List<Transform> characterPositions;
     public Button confirmButton;
     [SerializeField] private Button _backButton;
@@ -91,20 +92,25 @@ public class CharacterSelection : MonoBehaviour
     private void InitializeSingleSelection()
     {
         _currentPhase = SelectionPhase.SingleSelect;
+        searchedCharacter = characterList[Random.Range(0, characterList.Count)];
         SpawnCharacter(_singleSelectCharacter, characterPositions[0].position);
+        SpawnTraitPanel(searchedCharacter);
+
     }
 
     private void InitializeMatchSelection()
     {
         _currentPhase = SelectionPhase.MatchSelect;
 
-        searchedCharacter = characterList[Random.Range(0, characterList.Count)];
+        
 
         List<CharacterSO> picked = new List<CharacterSO>(characterList);
         Shuffle(picked);
 
-        for (int i = 0; i < picked.Count; i++)
+        for (int i = 0; i < picked.Count; i++) {
             SpawnCharacter(picked[i], GetCharacterPosition(i, picked.Count));
+            SpawnTraitPanel(picked[i]);
+        }
     }
 
     private Vector3 GetCharacterPosition(int index, int total)
@@ -132,6 +138,13 @@ public class CharacterSelection : MonoBehaviour
         _characterDisplays.Add(display);
         _instantiatedObjects.Add(character);
     }
+
+    private void SpawnTraitPanel(CharacterSO data)
+    {
+        var panel = Instantiate(traitPanelPrefab, transform);
+        panel.GetComponent<TraitPanel>().SetTraits(data);
+    }
+
 
     public void OnCharacterClicked(CharacterDisplay display)
     {
